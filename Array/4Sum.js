@@ -24,14 +24,14 @@
 var fourSum = function(nums, target) {
   if (nums.length < 4) return []
 
-  let result = [], low, height, current
+  let result = [], low, height, current, len = nums.length
 
   nums.sort(function(a, b) { return a-b })
   
-  for(var i =  0; i < nums.length; i++) {
+  for(var i =  0; i < len; i++) {
     if (i != 0 && nums[i] == nums[i-1]) continue
 
-    for(var j = i + 1; j < nums.length; j++) {
+    for(var j = i + 1; j < len; j++) {
       if (j != i+1 && nums[j] == nums[j-1]) continue
       current = nums[i] + nums[j];
 
