@@ -39,7 +39,8 @@ var threeSum = function(nums) {
   var result = [], target, low, height;
 
   for(var i = 0; i < nums.length; i++) {
-    if (target == nums[i]) continue
+    // 如果相同直接跳过，防止重复
+    if (i != 0 && nums[i] == nums[i-1]) continue
     
     target = nums[i]
     low = i + 1;
