@@ -29,9 +29,11 @@ var fourSum = function(nums, target) {
   nums.sort(function(a, b) { return a-b })
   
   for(var i =  0; i < len; i++) {
+    // 如果相同直接跳过，防止重复
     if (i != 0 && nums[i] == nums[i-1]) continue
 
     for(var j = i + 1; j < len; j++) {
+      // 如果相同直接跳过，防止重复
       if (j != i+1 && nums[j] == nums[j-1]) continue
       current = nums[i] + nums[j];
 
@@ -42,6 +44,7 @@ var fourSum = function(nums, target) {
         if (nums[low] + nums[height] + current == target) {
           result.push([nums[i], nums[j], nums[low], nums[height]])
           do {
+            // 如果相同直接跳过，防止重复
             low++;
           } while(nums[low] == nums[low - 1])
         } else if (nums[low] + nums[height] + current > target) {

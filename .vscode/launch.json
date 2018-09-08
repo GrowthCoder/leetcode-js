@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "启动程序",
-      "program": "${workspaceFolder}/Array/4Sum.js"
+      "program": "${workspaceFolder}/Array/016-3Sum-Closest.js"
     }
   ]
 }
