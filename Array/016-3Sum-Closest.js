@@ -25,7 +25,7 @@ var threeSumClosest = function(nums, target) {
   // 自定义最小值是关键
   min = nums[0] + nums[1] + nums[2]
 
-  
+  // for循环只需要len-2 因为多了两个指针
   for (var i = 0; i < len - 2; i++) {
     if (i > 0 && nums[i] == nums[i - 1]) continue
 
