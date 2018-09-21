@@ -19,7 +19,7 @@
 var buddyStrings = function(A, B) {
   var A_len = A.length
   var B_len = B.length
-  var count = 0, diff = []
+  var diff = []
 
   if (A_len != B_len) return false
 
