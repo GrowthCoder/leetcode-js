@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "启动程序",
-      "program": "${workspaceFolder}/List/LinkedListAlgo.js"
+      "program": "${workspaceFolder}/ali/index.js"
     }
   ]
 }

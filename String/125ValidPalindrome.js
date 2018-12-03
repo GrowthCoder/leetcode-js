@@ -33,3 +33,10 @@ var isPalindrome = function(s) {
 
 console.log(isPalindrome('abb'))
 // console.log(isPalindrome('aba'))
+
+// 方法二
+var run = function(s) {
+  if (typeof s !== 'string') return false
+
+  return s.split('').reverse().join('') === s
+}
