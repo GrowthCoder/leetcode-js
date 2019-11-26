@@ -19,6 +19,12 @@ var sortList = function(head) {
   if (!head || !head.next) {
     return head;
   }
+  let fast = head.next;
+  let slow = head;
+
+  while(fast.next !== null && slow.next !== null) {
+     
+  }
 };
 
 // 快排
@@ -35,8 +41,10 @@ class ListNode {
 
 let l = new ListNode(1);
 let l2 = new ListNode(2);
-let l3= new ListNode(4);
+let l3 = new ListNode(3);
+let l4= new ListNode(4);
 l.next = l2;
 l2.next = l3;
+l3.next = l4;
 
 console.log(sortList(l))

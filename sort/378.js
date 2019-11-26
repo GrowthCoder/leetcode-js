@@ -47,3 +47,26 @@ function heapSort(A) {
   }
   return A;
 }
+
+
+// 选择排序
+function selectSort(arr){
+  for(let i = 0,len = arr.length; i < len; i++){
+    let k = i;//用于存放当前循环中最小值得index 默认为循环初识值的index
+    for(let j = i; j < len; j++){
+      if(arr[j] < arr[k]){
+        k = j;
+      }
+    }
+    if(k !== i){
+      [arr[i], arr[k]] = [arr[k], arr[i]];
+    }
+  }
+  return arr;
+}
+
+console.log(kthSmallest( [
+  [ 1,  5,  9],
+  [10, 11, 13],
+  [12, 13, 15]
+], 8))
