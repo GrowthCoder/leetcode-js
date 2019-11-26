@@ -35,4 +35,4 @@ function checkSubs(strs, str) {
   return count === strs.length;
 }
 
-console.log(findLUSlength(["a","aa","aaa"]))
+console.log(findLUSlength(["aba", "cdc", "eae"]))

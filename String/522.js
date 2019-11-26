@@ -31,6 +31,7 @@ function isSubsequence(a,b) {
       pos++;
     }
   }
+  
   return pos === a.length;
 }
-console.log(findLUSlength(["aba", "cdc", "eae"]))
+console.log(findLUSlength(["aaaaaa", "aaaaaab", "aaa"]))
