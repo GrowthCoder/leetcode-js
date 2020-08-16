@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "启动程序",
-      "program": "${workspaceFolder}/String/13.Roman-to-Integer.js"
+      "program": "${workspaceFolder}/String/7.Reverse-Integer.js"
     }
   ]
 }

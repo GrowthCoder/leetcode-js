@@ -15,14 +15,14 @@
  * @param {number} target
  * @return {number[]}
  */
-var twoSum = function (numbers, target) {
+// var twoSum = function (numbers, target) {
 
-  for (var i = 0; i < numbers.length - 1; i++) {
-      for (var j = i + 1; j < numbers.length; j++) {
-          if (numbers[i] + numbers[j] === target) return [i, j];
-      }
-  }
-};
+//   for (var i = 0; i < numbers.length - 1; i++) {
+//       for (var j = i + 1; j < numbers.length; j++) {
+//           if (numbers[i] + numbers[j] === target) return [i, j];
+//       }
+//   }
+// };
 
 // 方法二：哈希表
 /** 
@@ -32,14 +32,16 @@ var twoSum = function (numbers, target) {
 **/ 
 var twoSum = function(nums, target) {
     var map = {}
+    let result = []
 
     for(var i = 0; i<nums.length; i++) {
         if(map[target-nums[i]] !== undefined) {
-            return [map[target-nums[i]], i]
+            result.push( [map[target-nums[i]], i])
         } else {
             map[nums[i]] = i
         }
     }
+    return result
 };
 
-console.log(twoSum([2,7,11,15], 9))
+console.log(twoSum([2,7,11,15, 4, 5], 9))
