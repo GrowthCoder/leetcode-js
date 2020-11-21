@@ -44,6 +44,7 @@ function list2Tree(list) {
         }
         prev.children.push(current)
         list.splice(j, 1);
+        j--;
       }
       // 当前节点是前个节点父节点
       if (prev.parent === current.id) {
