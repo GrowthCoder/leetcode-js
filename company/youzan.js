@@ -1,58 +1,117 @@
-/*
-
-// 将一天24小时按每半小划分成48段，我们用一个位图表示选中的时间区间，例如`110000000000000000000000000000000000000000000000`，
-// 表示第一个半小时和第二个半小时被选中了，其余时间段都没有被选中，也就是对应00:00~01:00这个时间区间。一个位图中可能有多个不连续的
-// 时间区间被选中，例如`110010000000000000000000000000000000000000000000`，表示00:00-1:00和02:00-02:30这两个时间区间被选中了。
-
-// 要求：写一个函数timeBitmapToRanges，将上述规则描述的时间位图转换成一个选中时间区间的数组。
-// 示例输入：`"110010000000000000000000000000000000000000000000"`
-// 示例输出：`["00:00~01:00", "02:00~02:30"]`
-
-*/ 
-
-function addZero(num, ignoreFirst = false) {
-    !ignoreFirst &&(num = num === '5' ? '30' : num); 
-    return num.length > 1 ? num : '0' + num;
-}
-
-function format(start, end) {
-    let endHour = (end / 2).toFixed(1);
-    let startHour = (start / 2).toFixed(1);
-    let reg = /(\d+)\.(\d+)/;
-    const endRes = endHour.match(reg);
-    const startRes = startHour.match(reg);
-    return (
-        addZero(startRes[1], true) +
-        ':' +
-        addZero(startRes[2]) +
-        '~' +
-        addZero(endRes[1], true) +
-        ':' +
-        addZero(endRes[2])
-    );
-}
-
 function timeBitmapToRanges(timeBitmap) {
-    let timeArr = timeBitmap.split('').map(v => +v);
-    const res = [];
+    let count = 0;
     let range = {};
-    let start = 0;
-    for (let i = 0; i <= timeArr.length; i++) {
-        if (timeArr[i]) {
-            start++;
-        }
-        if (!timeArr[i] && timeArr[i - 1]) {
-            range[i] = start;
-            start = 0;
-        }
-    }
-    for (let j in range) {
-        res.push(format(parseInt(j - range[j]), parseInt(j)));
-    }
-    return res;
-}
- 
-console.log(
-    timeBitmapToRanges('11001000101000000001110000000000000000000000111')
-);
+    let result = [];
+    let strs = timeBitmap.split('').map(item => +item);
 
+    if (!timeBitmap) {
+        return [];
+    }
+
+    for(let i = 0; i <= strs.length; i++) {
+        if (strs[i]) {
+            count++;
+        }
+
+        if (!strs[i] && strs[i-1]) {
+            range[i] = count;
+            count = 0;
+        }
+    }
+
+    let format = (start, end) => {
+        let startTime = (start / 2).toFixed(1);
+        let endTime = (end / 2).toFixed(1);
+        let startInfos = startTime.split('.');
+        let endInfos = endTime.split('.');
+
+        let formatTime = (time, isHour = false) => {
+            !isHour && (time = time === '5' ? '30' : time); 
+            return time > 10 ? time : `0${time}`;
+        }
+
+        return (
+            `${formatTime(startInfos[0], true)}: ${formatTime(startInfos[1])}~${formatTime(endInfos[0], true)}: ${formatTime(endInfos[1])}`
+        )
+    }
+
+    for (let j in range) {
+        result.push(format(j - range[j], +j))
+    }
+    return result;
+}
+
+// console.log(timeBitmapToRanges('110010001010000000011100000000000000000011111111'))
+
+// url format
+//解析url，参数会有字符串、数组、json string，复杂类型会encode后放入url
+let parseParam = (url) => {
+    let paramsArray = url.slice(url.indexOf('?') + 1).split('&');
+    let paramsObj = {};
+    paramsArray.forEach((item) => {
+        if (item.indexOf('=') > -1) {
+            let [key, value] = item.split('=');
+            value = decodeURIComponent(value);
+            if (paramsObj.hasOwnProperty(key)) {
+                paramsObj[key] = [].concat(paramsObj[key],value);
+            } else {
+                paramsObj[key] = value;
+            }
+        } else {
+            paramsObj[item] = true;
+        }
+    })
+    return paramsObj;
+};
+
+let url = 'http://www.domain.com/?user=anonymous&id=123&id=456&b[0]=2&b[1]=3&aaa={a:1}&enabled';
+// console.log(parseParam(url))
+
+// 3. a.b.c 
+let object = {a: 1, b: { c: 3}}
+// fun(object, 'a.b.c', 12) // 输出 3
+function get(object, path, defaultValue) {
+    let fn = (object, path) => {
+        console.log(object, path)
+    }
+
+
+    let result = object === null ? undefined : fn(object, path);
+    return result === undefined ? defaultValue : result;
+}
+console.log(get(object, 'a.b.c', 12))
+
+// 4. object key转驼峰
+
+function keyToHumps(obj) {
+
+    let toHump = str  => {
+        return str.replace(/\_(\w)/g, (match) => match.slice(1).toUpperCase())
+    }
+
+    let change = (source) => {
+        const targetObj = source.constructor === Array ? [] : {};
+
+        for(let key in source) {
+            if(source.hasOwnProperty(key)) {
+                if(source[key] && typeof source[key] === 'object') {
+                    targetObj[key] = change(source[key]);
+                } else {
+                    targetObj[toHump(key)] = source[key];
+                }
+            }
+        }
+        return targetObj;
+    }
+    return JSON.stringify(change(obj))
+}
+let obj = {
+    a_b: 1,
+    info: {
+        name_a: '11',
+        arr: [{
+            a_b:1
+        }]
+    }
+}
+// console.log(keyToHumps(obj))
